@@ -1,5 +1,4 @@
-import { request, response, Router } from "express";
-import { RepositoryNotFoundError } from "typeorm";
+import { Router } from "express";
 import UserController from "../src/controllers/UserController"
 
 

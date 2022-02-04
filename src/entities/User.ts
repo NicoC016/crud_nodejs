@@ -8,22 +8,22 @@ class User {
   id: string;
 
   @Column()
-  username!: string;
+  username: string;
 
   @PrimaryColumn({nullable: false})
   password: string;
 
   @Column()
-  email!: string;
+  email: string;
 
   @Column()
-  phone!: string;
+  phone: string;
 
   @Column()
-  city!: string;
+  city: string;
 
   @Column()
-  state!: string;
+  state: string;
 
   @CreateDateColumn()
   created_at: Date;

@@ -15,6 +15,17 @@
     href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css"></script>
+  <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css"></script>
 </head>
 
 <body>
@@ -53,14 +64,14 @@
     <br>
     <br>
     <br>
-    <table class="tableCategory">
-      <thead>
+    <table class="table-bordered border-dark text-center text-dark" id="tableCategory">
+      <thead class="tableHeader">
         <th scope="col">Categoría</th>
         <th scope="col">Creacion</th>
         <th scope="col">Actualizacion</th>
         <th scope="col">Comportamiento</th>
       </thead>
-      <tbody>
+      <tbody class="tbody">
         <% categories.forEach(function(category) { %>
           <tr>
             <td>
@@ -101,6 +112,29 @@
       <a href="./addCategory" class="btn primary-btn">Agregar Categoría</a>
     </div>
   </div>
+  <script>
+    $(document).ready(function(){
+      $('#tableCategory').DataTable({
+        dom: 'B',
+        buttons: [
+            {
+              extend: 'pdf', 
+              className: 'btn btn-danger',
+              titleAttr:'descargar en pdf',
+              text:'<i class="bi bi-file-earmark-pdf"> PDF</i>',
+              title: 'categorias'
+            },
+            {
+             extend: 'csv', 
+             className: 'btn btn-success',
+             titleAttr:'descargar en csv',
+             Text:'<i class="bi bi-filetype-csv"> csv</i>',
+             title:'categorias'
+            }
+        ]
+      })
+    })
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
     crossorigin="anonymous"></script>

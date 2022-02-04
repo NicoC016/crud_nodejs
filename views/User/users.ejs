@@ -15,12 +15,23 @@
     href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css"></script>
+  <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css"></script>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="./"><img src="img/icon.png" alt="Node.js icon" class="nav-icon"></a>
+      <a class="navbar-brand" href="./index"><img src="img/icon.png" alt="Node.js icon" class="nav-icon"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -45,15 +56,15 @@
     </div>
   </nav>
   <br>
-  <div class="row container centered" width="100vw">
+  <div class="row container centered table-responsive" width="100vw">
     <div class="text-center">
       <h2 class="h2">Tabla de Usuarios</h2>
     </div>
     <br>
     <br>
     <br>
-    <table class="tableUser">
-      <thead>
+    <table class="table-bordered border-dark text-center text-dark" id="tableUser" >
+      <thead class="tableHeader">
         <th scope="col">Nombre de Usuarios</th>
         <th scope="col">Email</th>
         <th scope="col">Telefono</th>
@@ -63,8 +74,8 @@
         <th scope="col">Actualizacion</th>
         <th scope="col">Comportamiento</th>
       </thead>
-      <tbody>
-        <% users.forEach(function(user){ %>
+      <tbody class="tbody">
+        <% users.forEach(function(user) { %>
           <tr>
             <td>
               <%= user.username %>
@@ -116,6 +127,30 @@
       <a href="./addUser" class="btn primary-btn">Agregar Usuario</a>
     </div>
   </div>
+  <script>
+    $(document).ready(function(){
+      $('#tableUser').DataTable({
+        dom: 'B',
+        buttons: [
+            {
+              extend: 'pdf', 
+              className: 'btn btn-danger',
+              titleAttr:'descargar en pdf',
+              text:'<i class="bi bi-file-earmark-pdf"> PDF</i>',
+              title:'Usuarios'
+            },
+            {
+             extend: 'csv', 
+             className: 'btn btn-success',
+             titleAttr:'descargar en csv',
+             Text:'<i class="bi bi-filetype-csv"> csv</i>',
+             title:'Usuarios'
+            }
+        ]
+      })
+    })
+
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
     crossorigin="anonymous"></script>
