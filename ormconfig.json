@@ -4,7 +4,6 @@
   "port": 3306,
   "username": "root",
   "password": "123456789",
-  
   "database": "database",
   "synchronize": true,
   "logging": false,

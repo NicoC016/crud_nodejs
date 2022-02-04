@@ -100,11 +100,21 @@ body {
   /* padding-top:25rem; */
 }
 .h2{
-  background-color: #60C871;
+  background :-webkit-linear-gradient(to right,#026913 ,#60C871);
+  background: #60C871;
+  background: linear-gradient(to right,#08aa23 ,#60C871);
   margin-right:-11px;
   margin-left:-11px;
 }
-.table{
+.tableUser{
+  color:white;
+  background-color:gray;
+}
+.tableProduct{
+  color:white;
+  background-color:gray;
+}
+.tableCategory{
   color:white;
   background-color:gray;
 }
@@ -132,3 +142,13 @@ body {
   size:30rem;
   margin: auto;
 }
+
+.tableHeader{
+  background-color: #60C871 ;
+}
+.tbody{
+  font-size: 18px;
+  font-family: sans-serif;
+}
+
+
