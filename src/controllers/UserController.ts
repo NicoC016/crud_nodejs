@@ -63,8 +63,9 @@ class UserController {
 
     async list(request: Request, response: Response) {
         const listUsersService = new UserService();
+  
 
-        const users = await listUsersService.getDatabyUsername("");
+        const users = await listUsersService.list();
 
         return response.render("User/users", {
         users: users

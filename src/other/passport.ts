@@ -47,10 +47,10 @@ passport.use('local.signup', new LocalStrategy({
     state,
     phone,
 }
- // Encriptamos la contraseña
+
  newUser.password = await helpers.encryptPassword(password);
 
- // Almaceno el usuario en la BD
+
  const userService = new UserService()
  try {
      await userService.create(newUser).then((result) => {

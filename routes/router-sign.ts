@@ -1,7 +1,7 @@
 const express = require('express');
 const routerSign = express.Router();
 import passport from "passport"
-const {isLoggedIn} =  require("../src/other/authoricer")
+const {isLoggedIn,isNotLoggedIn} =  require("../src/other/authoricer")
 
 
 // SIGNUP (registrarse)
@@ -14,6 +14,7 @@ routerSign.post('/signup', passport.authenticate('local.signup', {
     failureRedirect: '/signup',
     failureFlash: true
 }));
+
   
 // SINGIN (iniciar sesion)
 routerSign.get('/signin', (request, response) => {
@@ -27,13 +28,18 @@ routerSign.post('/signin', (request, response, next) => {
       failureFlash: true
     })(request, response, next);
 });
+//salir de la sesión
   
 routerSign.get('/logout', (request, response) => {
     request.logOut();
     response.redirect('/');
 });
+//perfil
+routerSign.get('/profile', isLoggedIn, (request, response) => {
+    response.render('login/profile');
+})
   
-routerSign.get("/index", isLoggedIn, (request, response) => {
-    request.render('index');
+routerSign.get("/index", isNotLoggedIn, (request, response) => {
+    response.render('/');
 });
 export {routerSign};

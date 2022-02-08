@@ -56,14 +56,18 @@ class UserService {
     }
 
 
-    async getData(id: string) {
+    async getData(id:string) {
         const usersRepository = getCustomRepository(UsersRepository);
     
         const user = await usersRepository.findOne(id);
     
         return user;
     }
-
+    async list(){
+        const userRepositori = getCustomRepository(UsersRepository);
+        const usuarios = await userRepositori.find();
+        return usuarios
+    }
 
     async getDatabyUsername( email: string) {
         const usersRepository = getCustomRepository(UsersRepository);
