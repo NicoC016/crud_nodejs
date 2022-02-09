@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import { stringify } from "querystring";
+import { User } from "../entities/User";
 import UserService from "../services/UserService";
 
 
@@ -47,7 +49,15 @@ class UserController {
             });
         }
     }
+    async getSession(request:Request, response:Response){
+        let {email} = request.query;
+        const getData= new UserService();
+        const session = await getData.getDatabyEmail(email)
+        return response.render("User/profile", {
+            session:session 
+        });
 
+    }
     async get(request: Request, response: Response) {
         let { id } = request.query;
         id = id.toString();

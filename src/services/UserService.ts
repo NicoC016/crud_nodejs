@@ -69,10 +69,10 @@ class UserService {
         return usuarios
     }
 
-    async getDatabyUsername( email: string) {
-        const usersRepository = getCustomRepository(UsersRepository);
+    async getDatabyEmail( email) {
+        const usersRepository2 = getCustomRepository(UsersRepository);
     
-        const users = await usersRepository.find(
+        const users = await usersRepository2.find(
             { where: { email:email }}
         );
     

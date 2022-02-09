@@ -10,7 +10,7 @@ class User {
   @Column()
   username: string;
 
-  @PrimaryColumn({nullable: false})
+  @Column({nullable: false})
   password: string;
 
   @Column()

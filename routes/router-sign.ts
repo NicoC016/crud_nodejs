@@ -34,12 +34,9 @@ routerSign.get('/logout', (request, response) => {
     request.logOut();
     response.redirect('/');
 });
-//perfil
-routerSign.get('/profile', isLoggedIn, (request, response) => {
-    response.render('login/profile');
-})
+
   
-routerSign.get("/index", isNotLoggedIn, (request, response) => {
+routerSign.get("/index", isLoggedIn, (request, response) => {
     response.render('/');
 });
 export {routerSign};

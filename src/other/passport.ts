@@ -17,7 +17,7 @@ passport.use('local.signin', new LocalStrategy({
 }, async (request, email, password, done) => {
   
   const userService = new UserService()
-  const busqueda : User[]  = await userService.getDatabyUsername(email)
+  const busqueda : User[]  = await userService.getDatabyEmail(email)
   if (busqueda.length == 1) {
     const user:User = busqueda[0];
     const validPassword = await helpers.matchPassword(password, user.password)

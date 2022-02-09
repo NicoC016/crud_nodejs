@@ -1,14 +1,14 @@
 module.exports = {
-    isLoggedIn (req, res, next): any {
-        if (req.isAuthenticated()) {
+    isLoggedIn (request, response, next): any {
+        if (request.isAuthenticated()) {
             return next();
         }
-        return res.redirect('/profile');
+        return response.redirect('/signin');
     },
     isNotLoggedIn (req, res, next): any{
         if (!req.isAuthenticated()) {
             return next();
         }
-        return res.redirect('/signin');
+        return res.redirect('/profile');
     }
 };

@@ -17,6 +17,8 @@ router.get("/index", (request, response) => {
 router.get("/addUser", (request, response) => {
   response.render("User/add");
 });
+router.get("/profile",userController.getSession)
+
 router.get("/users", userController.list);
 
 router.post("/add-user", userController.create);
