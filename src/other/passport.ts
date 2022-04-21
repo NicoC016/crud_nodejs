@@ -6,6 +6,7 @@ import {helpers} from"./helpers"
 import {User} from "../entities/User"
 
 
+
 //busqueda de usuario
 passport.use('local.signin', new LocalStrategy({
   usernameField: 'email',
@@ -22,12 +23,15 @@ passport.use('local.signin', new LocalStrategy({
     const user:User = busqueda[0];
     const validPassword = await helpers.matchPassword(password, user.password)
     if (validPassword) {
-      done(null, user, console.log('success', 'bienvenido ' + user.email));
+      request.flash("success_msg", "Bienvenido " , user.email)
+      done(null, user);
     } else {
-      done(null, false, console.log('message', 'contraseña incorrecta'));
+      request.flash("error_msg", "Contraseña incorrecta")
+      done(null, false);
     }
   } else {
-    return done(null, false, console.log('message', 'El usuario no existe.'));
+    request.flash("error_msg", "El usuario no existe.")
+    return done(null, false);
   }
 }));
 // registro de Creacion de usuario
@@ -36,9 +40,9 @@ passport.use('local.signup', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
   passReqToCallback: true
-}, async (resquest, email, password, done) => {
+}, async (request, email, password, done) => {
 
-  const { username, city, state, phone} = resquest.body;
+  const { username, city, state, phone} = request.body;
   const newUser = {
     email,
     password,
@@ -54,20 +58,20 @@ passport.use('local.signup', new LocalStrategy({
  const userService = new UserService()
  try {
      await userService.create(newUser).then((result) => {
-         console.log('message', 'Usuario creado con éxito');
+       request.flash('message', 'Usuario creado con éxito');
          return done(null, result);
      });
  } catch (err) {
-     console.log(err.toString() )
-     console.log('message', err.toString());
+     request.flash(err.toString() )
+     request.flash('message', err.toString());
      return done(null, null);
  }
 
 }));
 
-passport.serializeUser((usr: User, done) => {
+passport.serializeUser((user: User, done) => {
  
- done(null, usr.id);
+ done(null, user.id);
 });
 
 passport.deserializeUser(async (id: string, done) => {

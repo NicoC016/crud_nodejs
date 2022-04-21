@@ -22,7 +22,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="./signin.ejs"><img src="img/icon.png" alt="Node.js icon" class="nav-icon"></a>
+      <a class="navbar-brand" href="/"><img src="img/icon.png" alt="Node.js icon" class="nav-icon"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -36,9 +36,25 @@
       </div>
     </div>
   </nav>
+
+  <div>
+    <% if (success_msg) {%>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong><%= success_msg %></strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <% } %>
+    
+    <% if (error_msg) {%>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong><%= error_msg %></strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <% } %>
+  </div>
   
   <div class="container_1 ">
-        <div class="row text-center2">
+        <div class=" login  row text-center2">
           <!-- <img src="./img/icon.png" alt="LogoNode" class="card-img-top mx-auto lg-2 rounded-circle w-23 h-23"> -->
           <div class="col-lg-6 mx-auto">
             <div class="card text-center2 animate__animated animate__rollIn  ">
@@ -52,7 +68,7 @@
                     <input type="text" name="email" placeholder="Email" class="form-control mb-3" autofocus>
                   </div>
                   <div class="form-group">
-                    <input type="password" name="password" placeholder="Password" class="form-control mb-3">
+                    <input type="password" name="password" placeholder="Password" class="form-control mb-3" onclick="showPassword()" >
                   </div>
                   <button class="btn btn-primary btn-block">
                     Iniciar sesión
@@ -84,5 +100,6 @@
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
+    <script src="js/showPass.js"></script>
 </body>  
 </html>

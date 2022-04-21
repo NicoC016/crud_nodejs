@@ -1,6 +1,7 @@
 import { getCustomRepository } from "typeorm";
 import { ProductRepository } from "../repositories/ProductRepository";
 import { Product } from "../entities/Product";
+import { Category } from "../entities/Category";
 import { CategoryRepository } from "../repositories/CategoryRepository";
 
 interface IProduct{
@@ -9,14 +10,14 @@ interface IProduct{
     productname: string;
     price: number;
     type: "varchar";
-    categoryId: string;
+    category: Category;
     
 }
 
 class ProductService {
 
-    async create({ productname, price, type, categoryId }) {
-        if (!productname || !price || !type ||!categoryId) {
+    async create({ productname, price, type, category }) {
+        if (!productname || !price || !type ||!category) {
           throw new Error("Por favor complete todo los campos");
         }
 
@@ -34,7 +35,7 @@ class ProductService {
     newProduct.price = price
     newProduct.type = type
     //@ts-ignore
-    newProduct.categoryId = categoryId
+    newProduct.category = category
     
     
     console.log(newProduct);
@@ -72,8 +73,7 @@ class ProductService {
     async list() {
         const productRepository = getCustomRepository(ProductRepository);
     
-        const product = await productRepository.find();
-    
+        const product = await productRepository.find({relations:["category"]});   
         return product;
     }
 
@@ -84,7 +84,6 @@ class ProductService {
         }
     
         const productRepository = getCustomRepository(ProductRepository);
-    
         const product = await productRepository
             .createQueryBuilder()
             .where("name like :search", { search: `%${search}%` })
@@ -98,13 +97,13 @@ class ProductService {
 
 
     
-    async update({ id, productname, price, type, categoryId }: IProduct) {
+    async update({ id, productname, price, type, category }: IProduct) {
         const productRepository = getCustomRepository(ProductRepository);
 
         const product = await productRepository
             .createQueryBuilder()
             .update(Product)
-            .set({ productname, price, type, categoryId })
+            .set({ productname, price, type, category})
             .where("id = :id", { id })
             .execute();
 

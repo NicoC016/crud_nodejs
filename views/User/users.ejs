@@ -56,7 +56,7 @@
     </div>
   </nav>
   <br>
-  <div class="row container centered table-responsive" width="100vw">
+  <div class="row container9 centered table-responsive" width="100vw">
     <div class="text-center">
       <h2 class="h2">Tabla de Usuarios</h2>
     </div>
@@ -111,7 +111,7 @@
                 </div>
                 <div class="row"></div>
                 <div class="row">
-                  <form action="./delete-user" onclick='return confirm("¿Esta seguro que desea eliminar el usuario?")' method="POST">
+                  <form action="./delete-user" onclick='confirm("¿Esta seguro que desea eliminar el usuario?")' method="POST">
                     <input type="hidden" name="id" value="<%= user.id %>">
                     <button type="submit" class="btn delete-btn" ><i class="bi bi-person-x-fill"></i></button>
                   </form>

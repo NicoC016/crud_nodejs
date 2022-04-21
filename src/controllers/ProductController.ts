@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
 import { productService } from "../services/ProductService";
 import ProductService from "../services/ProductService";
-import { categoryService } from "../services/CategoryService";
-import CategoryService from "../services/CategoryService";
+import CategoryService ,{ categoryService } from "../services/CategoryService";
+
 
 
 
 class ProductController {
 
     async create(request: Request, response: Response) {
-        const { productname, price, type, categoryId } = request.body;
+        const { productname, price, type, category } = request.body;
         console.log(request.body);
 
         try {
@@ -18,7 +18,7 @@ class ProductController {
               productname,
               price,
               type,
-              categoryId
+              category
             }).then(() => {
               
               response.render("Product/message", {
@@ -76,6 +76,7 @@ class ProductController {
         const categoryList = new CategoryService();
 
         const category = await categoryList.list()
+        console.log(category)
         return response.render("Product/product", {
             products: products,
             category: category
@@ -102,12 +103,12 @@ class ProductController {
     }
 
     async update(request: Request, response: Response) {
-        const { id, productname, price, type, categoryId } = request.body;
+        const { id, productname, price, type, category } = request.body;
 
         const productService = new ProductService();
   
         try {
-            await productService.update({ id, productname, price, type, categoryId }).then(() => {
+            await productService.update({ id, productname, price, type, category }).then(() => {
                 response.render("Product/message", {
                     message: "Producto actualizado exitosamente"
                 });

@@ -18,6 +18,9 @@ body {
   background-position: bottom;
   background-position-y: 40rem;
 }
+.container9{
+  margin-top:7rem;
+}
 
 .container00{
   margin-bottom: 2rem;
@@ -134,7 +137,7 @@ body {
   margin-top:3rem;
 }
 .cards_1 {
-  margin-top:20rem;
+  margin-top:30rem;
   margin-bottom: 5rem;
 }
 .card-img-top{

@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, ManyToOne, JoinColumn, ManyToMany } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { Category } from "./Category";
+import { User } from "./User";
 
 @Entity("products")
 class Product {
@@ -17,9 +18,6 @@ class Product {
   @Column()
   type: "varchar";
   length: 1;
-
-  @Column()
-  categoryId: string
 
   @ManyToOne(() => Category, category => category.products)
   @JoinColumn({ name: 'categoryId'})

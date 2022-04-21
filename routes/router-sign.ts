@@ -1,9 +1,11 @@
-const express = require('express');
-const routerSign = express.Router();
+import express from "express";
 import passport from "passport"
-const {isLoggedIn,isNotLoggedIn} =  require("../src/other/authoricer")
+import { Authoricer } from "../src/other/authoricer";
 
 
+
+
+const routerSign = express.Router();
 // SIGNUP (registrarse)
 routerSign.get('/signup', (request, response) => {
     response.render('login/signup');
@@ -34,9 +36,13 @@ routerSign.get('/logout', (request, response) => {
     request.logOut();
     response.redirect('/');
 });
-
+//perfil
+routerSign.get("/profile", Authoricer.isNotLoggedIn,  (request, response,next) =>{
+    response.render("User/profile")
+    next()
+});
   
-routerSign.get("/index", isLoggedIn, (request, response) => {
+routerSign.get("/index", Authoricer.isNotLoggedIn, (request, response) => {
     response.render('/');
 });
 export {routerSign};

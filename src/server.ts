@@ -2,6 +2,7 @@ import "reflect-metadata";
 import "express-async-errors";
 import express, { Request, Response, NextFunction } from "express";
 import path from "path";
+import {User} from "../src/entities/User";
 import { router } from "../routes/routes-user";
 import { routerSign } from "../routes/router-sign";
 import { routerProduct } from "../routes/routes-product";
@@ -10,21 +11,43 @@ import session from "express-session";
 import passport from "passport";
 import "./database";
 import morgan from "morgan";
-
-
+import flash from 'connect-flash'
 //inicializacion
 const app = express();
+
+
+// sesion
+app.use(session({
+  secret: 'faztmysqlnodesession',
+  resave: false,
+  saveUninitialized: false
+}));
+
+
+app.use(flash())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-require("./other/passport")
 
 
-//middlewares 
-app.use(morgan('dev'));
+//middlewares
+app.use(morgan('dev')); 
 app.use(passport.initialize());
 app.use(passport.session());
 
-//rutas
+require("./other/passport")
+
+//global variant
+app.use((request, response, next) => {
+
+  app.locals.success_msg = request.flash("success_msg")
+  app.locals.error_msg = request.flash("error_msg")
+  response.locals.login_user = User ;
+  next()
+});
+
+require("./other/passport")
+
+//router
 app.use(router);
 app.use(routerProduct);
 app.use(routerCategory);
@@ -34,14 +57,7 @@ app.use(routerSign);
 
 app.set('view engine', 'ejs');
 
-// sesion
-app.use(session({
-  secret: 'faztmysqlnodesession',
-  resave: false,
-  saveUninitialized: false
-}));
-
-//inicio del server
+//start of server
 app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
   if (err instanceof Error) {
     return response.status(400).json({
@@ -54,6 +70,8 @@ app.use((err: Error, request: Request, response: Response, next: NextFunction) =
     message: "Internal Server Error",
   });
 });
+
+
 
 app.use(express.static(path.join(__dirname, "..", "public")));
 app.set("view engine", "ejs");

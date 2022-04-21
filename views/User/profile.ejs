@@ -30,57 +30,66 @@
       <div class="collapse navbar-collapse " id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-link">
-            <a class="nav-link active" aria-current="page" href="./users"><i class="bi bi-person-plus-fill" id="icono1"></i> Usuarios  </a>
+            <a class="nav-link active" aria-current="page" href="./users"><i class="bi bi-person-plus-fill"
+                id="icono1"></i> Usuarios </a>
           </li>
           <li class="nav-link">
-            <a class="nav-link active" aria-current="page" href="./products"><i class="bi bi-folder-fill"></i> Productos</a>
+            <a class="nav-link active" aria-current="page" href="./products"><i class="bi bi-folder-fill"></i>
+              Productos</a>
           </li>
           <li class="nav-link ">
-            <a class="nav-link active" aria-current="page" href="./category"><i class="bi bi-three-dots-vertical"></i> Categorías </a>
+            <a class="nav-link active" aria-current="page" href="./category"><i class="bi bi-three-dots-vertical"></i>
+              Categorías </a>
           </li>
           <li class="nav-link dropdown me-10">
-            <a class="boton_salir nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-person-circle"></i>
+            <a class="boton_salir nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle"></i>
             </a>
             <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-              <li><a class="nav-link active text-white " aria-current="page" href="/logout"><i class="bi bi-door-closed"></i> Cerrar Sesión</a></li>
+              <li><a class="nav-link active text-white " aria-current="page" href="/logout"><i
+                    class="bi bi-door-closed"></i> Cerrar Sesión</a></li>
             </ul>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-    <div class="container9 " style="margin-left: 37rem; margin-top: 3.8rem; ">
-        <div class="row">
-            <div class="col"> 
-              <div class="card border-success bg-dark " style="max-width: 21.9rem; max-height: 34rem;">
-                  <div class="card-header bg-transparent border-success">
 
-                    <h3 class="text-white">Bienvenido <%= session.username %> </h3>
-                  </div>
-                  <div class="card-body text-success text-white">
-                    <h4><%= session.email %></h4>
-                    <h4><%= session.phone %></h4>
-                    <h4><%= session.city %></h4>
-                    <h4><%= session.state %></h4>
+  <%login_user.forEach(function(User){ %>
+    <div class="container9 " style="margin-left: 36.5rem; margin-top: 3.8rem; ">
+      <div class="row">
+        <div class="col">
+          <div class="card border-success bg-dark  " style="max-width: 21.8rem; max-height: 34rem;">
 
-                  </div>
-                  <div class="card-footer bg-transparent border-success ">
-                    <form action="./editUser" method="GET">
-                      <input type="hidden" name="id" value="<%= session.id %>">
-                      <button type="submit" class="btn bg-transparent border-success m-4 text-white">Modifica tu perfil</button>
-                    </form>
-                  </div>
-
-              </div>    
+            <div class="card-header bg-transparent border-success">
+              <h3>Bienvenido <%=User.username %>
+              </h3>
             </div>
+            <div class="card-body text-success text-white">
+              <h4>
+                <%=User.email %>
+              </h4>
+            </div>
+            <div class="card-footer bg-transparent border-success ">
+              <form action="./editUser" method="GET">
+                <input type="hidden" name="id" value="<%=User.id %>">
+                <button type="submit" class="btn bg-transparent border-success m-4 text-white">Modifica tu
+                  perfil</button>
+              </form>
+            </div>
+            
+          </div>
         </div>
+      </div>
     </div>
- 
-  <footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-      crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
+  <% }) %>
+    <footer>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+      <script src="js/script.js"></script>
+    </footer>
 </body>
+
 </html>

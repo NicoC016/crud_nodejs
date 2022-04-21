@@ -73,9 +73,10 @@
         <th scope="col-1">Precio</th>
         <th scope="col-2">Tipo</th>
         <th scope="col-3">Categoría</th>
-        <th scope="col-4">Creacion</th>
-        <th scope="col-5">Actualizacion</th>
-        <th scope="col-6">Comportamiento</th>
+        <th scope="col 4">usuario</th>
+        <th scope="col-5">Creacion</th>
+        <th scope="col-6">Actualizacion</th>
+        <th scope="col-7">Comportamiento</th>
       </thead>
       <tbody class="tbody">
         <% products.forEach(function(product) { %>
@@ -90,7 +91,12 @@
               <%= product.type %>
             </td>
             <td>
-              <%= product.categoryId %>
+              <% if (product.category) { %>
+                <%= product.category.name %>
+                <% } %>
+            </td>
+            <td>
+              <%= product.user%>
             </td>
             <td>
               <%= product.created_at.toLocaleDateString() %>
@@ -110,7 +116,7 @@
                 </div>
                 <div class="row"></div>
                 <div class="row">
-                  <form action="./delete-product" onclick='return confirm("¿Esta seguro que desea eliminar el Producto?")'method="POST">
+                  <form action="./delete-product" onclick='confirm("¿Esta seguro que desea eliminar el Producto?")'method="POST">
                     <input type="hidden" name="id" value="<%= product.id %>">
                     <button type="submit" class="btn delete-btn"><i class="bi bi-folder-x"></i></button>
                   </form>

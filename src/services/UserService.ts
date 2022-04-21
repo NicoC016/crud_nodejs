@@ -69,7 +69,7 @@ class UserService {
         return usuarios
     }
 
-    async getDatabyEmail( email) {
+    async getDatabyEmail( email:String) {
         const usersRepository2 = getCustomRepository(UsersRepository);
     
         const users = await usersRepository2.find(
