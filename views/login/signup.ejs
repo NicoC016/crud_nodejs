@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRUD Node.js</title>
-  <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
+ <title>TecnoGames</title>
+  <link rel="shortcut icon" href="img/Nuevo proyecto.png" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
@@ -19,21 +19,14 @@
 </head>
 
 <body class="inicio">
+  <nav>
+    <img src="img/programacion 2.png" alt="" class="logo22">
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="./"><img src="img/icon.png" alt="Node.js icon" class="nav-icon"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-  </nav>
-
+</nav>
   <div class="container">
     <div class="row">
       <div class="col-md-5">
-        <div class="card text-center3 animate__animated animate__bounceInLeft">
+        <div class="card signup text-center animate__animated animate__bounceInLeft">
           <div class="card-header">
             <h3 class="text-white">Registrate</h3>
           </div>
@@ -43,13 +36,13 @@
                 <input type="text" id="username" name="username" placeholder="Nombre de Usuario" required  class="form-control mb-2">
               </div>
               <div>
-                <input type="password" id="password" name="password" placeholder="Contraseña" class="form-control mb-2">
+                <input type="password" id="password" name="password" placeholder="Contraseña" class="form-control mb-2" required>
               </div>
               <div class="form-group">
-                <input type="email" id="email" name="email" placeholder="Email" class="form-control mb-2">
+                <input type="email" id="email" name="email" placeholder="Email" class="form-control mb-2"required>
               </div>
               <div class="form-group">
-                <select name="state" id="state" class="form-select mb-2">
+                <select name="state" id="state" class="form-select mb-2"required>
                   <option value="" selected disabled>Seleccione su Provincia</option>
                   <option value="BA">Buenos Aires</option>
                   <option value="CA">Catamarca</option>
@@ -77,16 +70,17 @@
                 </select>
               </div>
               <div class="form-group">
-                <input type="city" id="city" name="city" placeholder="Ciudad" class="form-control mb-2">
+                <input type="city" id="city" name="city" placeholder="Ciudad" class="form-control mb-2" required>
               </div>
               <div class="form-group">
-              <input type="phone" id="phone" name="phone" placeholder="Telefono" class="form-control mb-2">
+              <input type="number" id="phone" name="phone" placeholder="Telefono" class="form-control mb-2" required>
               <div class="form-group">
                 <button class="btn btn-success btn-block">
                   Registrarse
                 </button>
               </div>
             </form>
+            <p class="text-white">¿Ya tenes una cuenta? inicia sesión <a href="./signin">aqui</a></p>
           </div>
         </div>
       </div>

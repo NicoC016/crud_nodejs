@@ -1,7 +1,7 @@
 
 // $(document).ready(function(){
 //   function exportTable(){
-//     TableExport(document.getElementById("#tableProduct"),{
+//     TableExport(document.getElementById("#tablecentral"),{
 //       headers: true,                      // (Boolean), display table headers (th or td elements) in the <thead>, (default: true)
 //       footers: false,                      // (Boolean), display table footers (th or td elements) in the <tfoot>, (default: false)
 //       formats: ["pdf", "csv"],             // (String[]), filetype(s) for the export, (default: ['xlsx', 'csv', 'txt'])
@@ -25,7 +25,7 @@
 //     unit: "px",
 //     format: "a4",
 //   });
-//   source = $('#tableProduct')[0]
+//   source = $('#tablecentral')[0]
 
 //   specialElementHandlers = {
 //     '#bypassme': function (element, renderer) {

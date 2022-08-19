@@ -32,12 +32,22 @@ routerSign.post('/signin', (request, response, next) => {
 });
 //salir de la sesión
   
-routerSign.get('/logout', (request, response) => {
-    request.logOut();
-    response.redirect('/');
-});
+// routerSign.get('/logout', (request, response) => {
+//     request.logOut();
+//     response.redirect('/');
+// });
+
+routerSign.get('/logout', function (req, res,next) {
+    req.session.destroy(function (err) {
+        if (err) {
+          return console.error(err);
+        } else {
+          return res.redirect('/');
+        };
+    })  
+})
 //perfil
-routerSign.get("/profile", Authoricer.isNotLoggedIn,  (request, response,next) =>{
+routerSign.get("/profile", Authoricer.isLoggedIn,  (request, response,next) =>{
     response.render("User/profile")
     next()
 });

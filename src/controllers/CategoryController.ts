@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import CategoryService from "../services/CategoryService";
+import flash from"connect-flash";
 
 
 class CategoryController {
@@ -13,14 +14,13 @@ class CategoryController {
             await createCategoryService.create({
             name
             }).then(() => {
-            response.render("Category/message", {
-                message: "Categoría creada exitosamente"
-            });
+                request.flash("success_msg", "categoria agregada correctamente")
+                response.redirect("./category")
             });
         } catch (err) {
-            response.render("Category/message", {
-            message: `Error al crear categoría: ${err.message}`
-            });
+            request.flash("error_msg", "fallo al crear la categoria")
+            response.redirect("./addCategory")
+            
         }
   
     }
@@ -32,14 +32,12 @@ class CategoryController {
   
         try {
             await deleteCategoryService.delete(id).then(() => {
-                response.render("Category/message", {
-                message: "Categoría eliminado exitosamente"
-                });
+                request.flash("success_msg","categoria eliminada exitosamente");
+                response.redirect("./category")
             });
         } catch (err) {
-            response.render("Product/message", {
-                message: `Error al eliminar categoría: ${err.message}`
-            });
+            request.flash("error_msg","fallo al eliminar la categoria");
+            response.redirect("./category")
         }
     }
 
@@ -79,9 +77,8 @@ class CategoryController {
                 search: search
             });
         } catch (err) {
-            response.render("Category/message", {
-                message: `Error al buscar categoría: ${err.message}`
-            });
+            request.flash("error_msg","fallo al buscar la categoria");
+            response.redirect("./category")
         }
     }
 
@@ -92,14 +89,12 @@ class CategoryController {
   
         try {
             await updateCategoryService.update({ id, name }).then(() => {
-                response.render("Category/message", {
-                    message: "Categoría actualizado exitosamente"
-                });
+                request.flash("success_msg","categoria actualizada correctamente")
+                response.redirect("./category")
             });
         } catch (err) {
-            response.render("Category/message", {
-            message: `Error al actualizar categoría: ${err.message}`
-            });
+            request.flash("error_msg", "fallo al actualizar la categoria");
+            response.redirect("./editCategory")
         }  
     }
 }

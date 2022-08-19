@@ -1,12 +1,12 @@
-import {User} from "../entities/User"
+import {Request, Response} from "express"
 export class Authoricer{
-    static isLoggedIn (request, response, next): any {
-        if (request.isAuthenticated(User)) {
+    static isLoggedIn (request:Request, response:Response, next) {
+        if (!request.isAuthenticated()) {
             return next();
         }
         return response.redirect('/profile');
     }
-    static isNotLoggedIn (req, res, next): any{
+    static isNotLoggedIn (req:Request, res:Response, next): any{
         if (!req.isAuthenticated()) {
             return next();
         }

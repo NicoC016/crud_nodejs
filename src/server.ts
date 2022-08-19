@@ -2,7 +2,6 @@ import "reflect-metadata";
 import "express-async-errors";
 import express, { Request, Response, NextFunction } from "express";
 import path from "path";
-import {User} from "../src/entities/User";
 import { router } from "../routes/routes-user";
 import { routerSign } from "../routes/router-sign";
 import { routerProduct } from "../routes/routes-product";
@@ -20,7 +19,7 @@ const app = express();
 app.use(session({
   secret: 'faztmysqlnodesession',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
 }));
 
 
@@ -37,15 +36,15 @@ app.use(passport.session());
 require("./other/passport")
 
 //global variant
-app.use((request, response, next) => {
+app.use((request:Request, response, next) => {
 
   app.locals.success_msg = request.flash("success_msg")
   app.locals.error_msg = request.flash("error_msg")
-  response.locals.login_user = User ;
+  app.locals.login_user = request.user
   next()
 });
 
-require("./other/passport")
+
 
 //router
 app.use(router);
@@ -77,6 +76,6 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "..", "views"));
 
-app.listen(3000, () => {
-  console.log("Server is running at port 3000");
+app.listen(3001, () => {
+  console.log("Server is running at port 3001");
 });

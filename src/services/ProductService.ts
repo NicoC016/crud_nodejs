@@ -2,11 +2,10 @@ import { getCustomRepository } from "typeorm";
 import { ProductRepository } from "../repositories/ProductRepository";
 import { Product } from "../entities/Product";
 import { Category } from "../entities/Category";
-import { CategoryRepository } from "../repositories/CategoryRepository";
 
 interface IProduct{
   
-    id?: string;
+    id: string;
     productname: string;
     price: number;
     type: "varchar";
@@ -28,13 +27,11 @@ class ProductService {
     if (productnameAlreadyExists) {
         throw new Error("El nombre del producto ya está registrado");
     }
-
     const newProduct = new Product()
    
     newProduct.productname = productname
     newProduct.price = price
     newProduct.type = type
-    //@ts-ignore
     newProduct.category = category
     
     

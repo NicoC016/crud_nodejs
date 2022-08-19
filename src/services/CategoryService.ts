@@ -5,37 +5,37 @@ import { Category } from "../entities/Category";
 interface ICategory {
     id?: string;
     name: string;
-    
+
 }
 
 class CategoryService {
 
     async create({ name }: ICategory) {
         if (!name) {
-        throw new Error("Por favor complete todos los campos");
+            throw new Error("nombre ya existe")
         }
 
-    const categoryRepository = getCustomRepository(CategoryRepository);
+        const categoryRepository = getCustomRepository(CategoryRepository);
 
-    const nameAlreadyExists = await categoryRepository.findOne({ name });
+        const nameAlreadyExists = await categoryRepository.findOne({ name });
 
-    if (nameAlreadyExists) {
-        throw new Error("La categoría ya está registrada");
-    }
+        if (nameAlreadyExists) {
+            throw new Error("La categoría ya está registrada");
+        }
 
 
-    const category = categoryRepository.create({ name });
+        const category = categoryRepository.create({ name });
 
-    await categoryRepository.save(category);
+        await categoryRepository.save(category);
 
-    return category;
+        return category;
 
     }
 
 
     async delete(id: string) {
         const categoryRepository = getCustomRepository(CategoryRepository);
-    
+
         const category = await categoryRepository
             .createQueryBuilder()
             .delete()
@@ -49,18 +49,18 @@ class CategoryService {
 
     async getData(id: string) {
         const categoryRepository = getCustomRepository(CategoryRepository);
-    
+
         const category = await categoryRepository.findOne(id);
-    
+
         return category;
     }
 
 
     async list() {
         const categoryRepository = getCustomRepository(CategoryRepository);
-    
+
         const categories = await categoryRepository.find();
-    
+
         return categories;
     }
 
@@ -69,19 +69,19 @@ class CategoryService {
         if (!search) {
             throw new Error("Por favor complete el campo de búsqueda");
         }
-    
+
         const categoryRepository = getCustomRepository(CategoryRepository);
-    
+
         const category = await categoryRepository
             .createQueryBuilder()
             .where("name like :search", { search: `%${search}%` })
             .getMany();
-    
+
         return category;
     }
 
 
-    
+
     async update({ id, name }: ICategory) {
         const categoryRepository = getCustomRepository(CategoryRepository);
 
@@ -94,9 +94,8 @@ class CategoryService {
 
         return category;
     }
-    
+
 };
 
 export const categoryService = new CategoryService()
 export default CategoryService;
-  

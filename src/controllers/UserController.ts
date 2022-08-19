@@ -20,14 +20,12 @@ class UserController {
             city,
             state
             }).then(() => {
-            response.render("User/message", {
-                message: "Usuario creado exitosamente"
-            });
+                request.flash("success_msg","usuario agregado exitosamente");
+                response.redirect("./users")
             });
         } catch (err) {
-            response.render("User/message", {
-            message: `Error al crear usuario: ${err.message}`
-            });
+            request.flash("error_msg","fallo al agregar el usuario");
+            response.redirect("./addUser")
         }
   
     }
@@ -39,14 +37,12 @@ class UserController {
   
         try {
             await deleteUserService.delete(id).then(() => {
-                response.render("User/message", {
-                message: "Usuario eliminado exitosamente"
-                });
+                request.flash("success_msg","usuario eliminado exitosamente");
+                response.redirect("./users")
             });
         } catch (err) {
-            response.render("User/message", {
-                message: `Error al eliminar usuario: ${err.message}`
-            });
+            request.flash("error_msg","fallo al eliminar el usuario");
+            response.redirect("./users")
         }
     }
     async get(request: Request, response: Response) {
@@ -86,9 +82,8 @@ class UserController {
                 search: search
             });
         } catch (err) {
-            response.render("User/message", {
-                message: `Error al buscar usuario: ${err.message}`
-            });
+            request.flash("error_msg","fallo al buscar el usuario");
+            response.redirect("./users")
         }
     }
 
@@ -99,14 +94,12 @@ class UserController {
   
         try {
             await updateUserService.update({ id, username, email, phone, city, state,password }).then(() => {
-                response.render("User/message", {
-                    message: "Usuario actualizado exitosamente"
-                });
+                request.flash("success_msg","usuario actualizado exitosamente");
+                response.redirect("./users")
             });
         } catch (err) {
-            response.render("User/message", {
-            message: `Error al actualizar usuario: ${err.message}`
-            });
+            request.flash("error_msg","fallo al actualizar el usuario");
+            response.redirect("./editUser")
         }  
     }
 }

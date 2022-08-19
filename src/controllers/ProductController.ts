@@ -13,23 +13,20 @@ class ProductController {
         console.log(request.body);
 
         try {
-            await productService.create({
-              
-              productname,
-              price,
-              type,
-              category
+            await productService.create({  
+                productname,
+                price,
+                type,
+                category
             }).then(() => {
               
-              response.render("Product/message", {
-                message: "Producto creado con exitosamente",
-              });
+                request.flash("success_msg","producto agregado exitosamente");
+                response.redirect("./products")
             });
           } catch (err) {
             
-            response.render("Product/message", {
-              message: `Error al crear producto: ${err.message}`
-            });
+                request.flash("error_msg","fallo al agregar el producto");
+                response.redirect("./addProduct")
           }
   
     }
@@ -45,14 +42,12 @@ class ProductController {
   
         try {
             await productService.delete(id).then(() => {
-                response.render("Product/message", {
-                message: "Producto eliminado exitosamente"
-                });
+                request.flash("success_msg","producto eliminado exitosamente");
+                response.redirect("./products")
             });
         } catch (err) {
-            response.render("Product/message", {
-                message: `Error al eliminar producto: ${err.message}`
-            });
+            request.flash("error_msg","fallo al eliminar el producto");
+            response.redirect("./products")
         }
     }
 
@@ -96,9 +91,8 @@ class ProductController {
                 search: search
             });
         } catch (err) {
-            response.render("Product/message", {
-                message: `Error al buscar producto: ${err.message}`
-            });
+            request.flash("error_msg","fallo al buscar el producto");
+            response.redirect("./products")
         }
     }
 
@@ -109,14 +103,12 @@ class ProductController {
   
         try {
             await productService.update({ id, productname, price, type, category }).then(() => {
-                response.render("Product/message", {
-                    message: "Producto actualizado exitosamente"
-                });
+                request.flash("success_msg","producto actualizado exitosamente");
+                response.redirect("./products")
             });
         } catch (err) {
-            response.render("Product/message", {
-            message: `Error al actualizar producto: ${err.message}`
-            });
+            request.flash("error_msg","fallo al actualizar el producto");
+            response.redirect("./editProduct")
         }  
     }
 }

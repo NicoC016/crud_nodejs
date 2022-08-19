@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRUD Node.js</title>
-  <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
+  <title>TecnoGames</title>
+  <link rel="shortcut icon" href="img/Nuevo proyecto.png" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
@@ -29,41 +29,19 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="./index"><img src="img/icon.png" alt="Node.js icon" class="nav-icon"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="./index"><i class="bi bi-house-door-fill"></i> Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="./products"><i class="bi bi-folder-fill"></i> Productos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="./category"><i class="bi bi-three-dots-vertical"></i> Categorías</a>
-          </li> 
-        </ul>
-        <form class="d-flex" action="./searchUser" method="GET">
-          <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar" name="search">
-          <button class="btn secondary-btn" type="submit">Buscar</button>
-        </form>
-      </div>
-    </div>
-  </nav>
-  <br>
-  <div class="row container9 centered table-responsive" width="100vw">
+  <%- include('../other/index'); -%>
+  <div class="incluide">
+    <%- include('../message'); %>
+  </div>
+  
+  <div class="users row container centered table-responsive" width="100vw">
     <div class="text-center">
       <h2 class="h2">Tabla de Usuarios</h2>
     </div>
     <br>
     <br>
     <br>
-    <table class="table-bordered border-dark text-center text-dark" id="tableUser" >
+    <table class="table-bordered border-dark text-center text-dark" id="tablecentral" >
       <thead class="tableHeader">
         <th scope="col">Nombre de Usuarios</th>
         <th scope="col">Email</th>
@@ -75,7 +53,7 @@
         <th scope="col">Comportamiento</th>
 
       </thead>
-      <tbody class="tbody">
+      <tbody class="tbody text-white">
         <% users.forEach(function(user) { %>
           <tr>
             <td>
@@ -131,7 +109,7 @@
 
   <script>
     $(document).ready(function(){
-      $('#tableUser').DataTable({
+      $('#tablecentral').DataTable({
         dom: 'B',
         buttons: [
             {
@@ -157,6 +135,7 @@
     integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
     crossorigin="anonymous"></script>
   <script src="js/script.js"></script>
+  <script src="js/sidebars.js"></script>
 </body>
 
 </html>
