@@ -1,8 +1,16 @@
-import express from "express";
+import express, { NextFunction, Request, Response }from "express";
 import passport from "passport"
 import { Authoricer } from "../src/other/authoricer";
 
+// Validacion de identidad 
+//  const redirectLogin = (req:Request, res:Response,next: NextFunction) => {  
+//     if(req.session.cookie.path =="/index"){
+//         res.redirect("/")
 
+//     }else{
+//         next()
+//     }
+//  }
 
 
 const routerSign = express.Router();
@@ -31,12 +39,6 @@ routerSign.post('/signin', (request, response, next) => {
     })(request, response, next);
 });
 //salir de la sesión
-  
-// routerSign.get('/logout', (request, response) => {
-//     request.logOut();
-//     response.redirect('/');
-// });
-
 routerSign.get('/logout', function (req, res,next) {
     req.session.destroy(function (err) {
         if (err) {
@@ -47,12 +49,12 @@ routerSign.get('/logout', function (req, res,next) {
     })  
 })
 //perfil
-routerSign.get("/profile", Authoricer.isLoggedIn,  (request, response,next) =>{
+routerSign.get("/profile",   (request, response,next) =>{
     response.render("User/profile")
     next()
 });
   
-routerSign.get("/index", Authoricer.isNotLoggedIn, (request, response) => {
+routerSign.get("/index",  (request, response) => {
     response.render('/');
 });
 export {routerSign};

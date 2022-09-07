@@ -1,4 +1,5 @@
 import {Request, Response} from "express"
+
 export class Authoricer{
     static isLoggedIn (request:Request, response:Response, next) {
         if (!request.isAuthenticated()) {
@@ -12,4 +13,4 @@ export class Authoricer{
         }
         return res.redirect('/signin');
     }
-};
+}

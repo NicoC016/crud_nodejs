@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+  <%- include('../other/header'); -%>
+<body>
+  <%- include('../other/index'); -%>
+
+  <br>
+  <div class="productTools container">
+    <div class="text-center">
+      <h2 class="h2">Editar pedido</h2>
+    </div>
+    <br>
+    <form class="text-white" action="./edit-order" method="POST">
+      <input type="hidden" name="id" value="<%= order.id %>" required>  
+      <div class="row">
+        <div class="col-12">
+          <label for="numeroDeOrden" class="form-label">Numero de pedido</label>
+          <input type="number" name="numeroDeOrden" id="numeroDeOrden" class="form-control" value="<%= order.numeroDeOrden %>" required>
+        </div>
+      </div>
+      <br>
+      <div class="row"> 
+        <div class="col-6">
+          <label for="cliente" class="form-label">Cliente</label>
+          <input type="text" name="cliente" id="cliente" class="form-control" value="<%= order.cliente %>"required>
+        </div>
+        <div class="col-6">
+          <label for="fecha" class="form-label">Fecha</label>
+          <input type="date" name="fecha" id="fecha" class="form-control" value="<%= order.fecha %>"required>
+        </div> 
+      </div>
+      <div class="col-6">
+        <label for="productos" class="form-label">Productos</label>
+        <select name="productos" id="productos" class="form-select"required>
+          <option value="" selected disabled>Seleccione los productos</option>
+          <% productos.forEach(function(producto){ %>
+            <option value="<%= producto.id %>">
+              <%= producto.name %>
+            </option>
+            <%})%>
+        </select>
+        <br>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-6">
+          <div class="float-start">
+            <a href="./orders" class="btn primary-btn">Volver los pedidos</a>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="float-end">
+            <button type="submit" class="btn primary-btn">Editar pedido</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+  
+</body>
+
+</html>

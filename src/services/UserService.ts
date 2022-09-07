@@ -4,6 +4,8 @@ import { User } from "../entities/User";
 
 interface IUser {
     id?: string;
+    name:string;
+    lastName:string;
     username: string;
     password?:string;
     email: string;
@@ -14,8 +16,8 @@ interface IUser {
 
 class UserService {
 
-    async create({ username, email, phone, city, state, password }: IUser) {
-        if (!username || !email || !phone || !city || !state||!password) {
+    async create({ name, lastName, username, email, phone, city, state, password }: IUser) {
+        if (!name|| !lastName|| !username|| !password || !email || !phone || !city || !state||!password) {
         throw new Error("Por favor complete todos los campos");
         }
 
@@ -33,7 +35,7 @@ class UserService {
         throw new Error("El email ya está registrado");
     }
 
-    const user = usersRepository.create({ username, email, phone, city, state, password });
+    const user = usersRepository.create({ name,lastName, username, email, phone, city, state, password });
 
     await usersRepository.save(user);
 
@@ -90,6 +92,8 @@ class UserService {
         const user = await usersRepository
             .createQueryBuilder()
             .where("username like :search", { search: `%${search}%` })
+            .orWhere("name like :search", { search: `%${search}%` })
+            .orWhere("lastname like :search", { search: `%${search}%` })
             .orWhere("email like :search", { search: `%${search}%` })
             .orWhere("phone like :search", { search: `%${search}%` })
             .orWhere("city like :search", { search: `%${search}%` })
@@ -101,13 +105,13 @@ class UserService {
 
 
     
-    async update({ id, username, email, phone, city, state,password }: IUser) {
+    async update({ id, name, lastName, username, email, phone, city, state,password }: IUser) {
         const usersRepository = getCustomRepository(UsersRepository);
 
         const user = await usersRepository
             .createQueryBuilder()
             .update(User)
-            .set({ username, email, phone, city, state,password })
+            .set({ name, lastName, username, email, phone, city, state,password })
             .where("id = :id", { id })
             .execute();
 

@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
-import { stringify } from "querystring";
-import { User } from "../entities/User";
 import UserService from "../services/UserService";
 
 
 class UserController {
 
     async create(request: Request, response: Response) {
-        const { username, email, phone, city, state,password } = request.body;
+        const { name, lastName, username, email, phone, city, state,password } = request.body;
     
         const createUserService = new UserService();
     
         try {
             await createUserService.create({
+            name,
+            lastName,
             username,
             email,
             password,
@@ -88,12 +88,12 @@ class UserController {
     }
 
     async update(request: Request, response: Response) {
-        const { id, username, email, phone, city, state,password } = request.body;
+        const { id,name, lastName,username, email, phone, city, state,password } = request.body;
     
         const updateUserService = new UserService();
   
         try {
-            await updateUserService.update({ id, username, email, phone, city, state,password }).then(() => {
+            await updateUserService.update({ id, name, lastName, username, email, phone, city, state,password }).then(() => {
                 request.flash("success_msg","usuario actualizado exitosamente");
                 response.redirect("./users")
             });

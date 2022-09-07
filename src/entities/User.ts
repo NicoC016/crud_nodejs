@@ -1,11 +1,18 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn} from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn} from "typeorm";
 import { v4 as uuid } from "uuid";
+import { Order } from "./Order";
 
 @Entity("users")
 class User {
 
   @PrimaryColumn()
   id: string;
+
+  @Column()
+  name: string;
+
+  @Column()
+  lastName: string
 
   @Column()
   username: string;
@@ -24,6 +31,9 @@ class User {
 
   @Column()
   state: string;
+
+  @OneToMany(()=>Order, order => order.cliente  )
+  orders:Order[];
 
   @CreateDateColumn()
   created_at: Date;

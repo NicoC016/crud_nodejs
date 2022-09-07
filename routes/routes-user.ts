@@ -7,6 +7,7 @@ const router = Router();
 const userController = new UserController();
 
 router.get("/", (request, response) => {
+
   response.render("login/signin")
 }); 
 

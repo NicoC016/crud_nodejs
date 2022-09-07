@@ -11,6 +11,7 @@ import passport from "passport";
 import "./database";
 import morgan from "morgan";
 import flash from 'connect-flash'
+import { routerOrder } from "../routes/router-order";
 //inicializacion
 const app = express();
 
@@ -20,6 +21,13 @@ app.use(session({
   secret: 'faztmysqlnodesession',
   resave: false,
   saveUninitialized: false,
+  cookie : {
+    sameSite: true,
+    secure: false,
+    path: '/',
+    httpOnly: true
+  
+  }
 }));
 
 
@@ -40,8 +48,8 @@ app.use((request:Request, response, next) => {
 
   app.locals.success_msg = request.flash("success_msg")
   app.locals.error_msg = request.flash("error_msg")
-  app.locals.login_user = request.user
   next()
+
 });
 
 
@@ -51,6 +59,7 @@ app.use(router);
 app.use(routerProduct);
 app.use(routerCategory);
 app.use(routerSign);
+app.use(routerOrder);
 
 
 
