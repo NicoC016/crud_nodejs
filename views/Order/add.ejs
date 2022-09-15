@@ -32,12 +32,12 @@
           </div>
           <div class="row">
             <div class="col-6">
-            <label for="productos" class="form-label">Categoria</label>
+            <label for="productos" class="form-label">Productos</label>
             <select name="productos" id="productos" class="form-select" required>
               <option value="" selected disabled>Seleccione los productos</option>
-              <% productos.forEach(function(producto){ %>
-                <option value="<%= producto.id %>">
-                  <%= producto.name %>
+              <% productos.forEach(function(productos){ %>
+                <option value="<%= productos.id %>">
+                  <%= productos.productname %>
                 </option>
                 <%})%>
             </select>

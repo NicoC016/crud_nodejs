@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, JoinColumn, ManyToMany, ManyToOne } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, JoinColumn, ManyToMany, ManyToOne, JoinTable } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { Product } from "./Product";
 import { User } from "./User";
@@ -15,9 +15,8 @@ class Order {
   @Column()
   numeroDeOrden: number;
 
-  @ManyToOne(()=>User, user =>user.orders)
-  @JoinColumn({name:"cliente"})
-  cliente:User
+  @Column()
+  cliente:string
 
   @Column()
   fecha: Date;
@@ -25,9 +24,11 @@ class Order {
   @Column()
   status: string;
 
-  @ManyToMany(() => Product)
-  @JoinColumn()
-  productos: Product[]
+  @ManyToMany(() => Product,{
+    cascade: true
+  })
+  @JoinTable()
+  productos: Product  
 
   @CreateDateColumn()
   created_at: Date;

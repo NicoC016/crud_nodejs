@@ -1,16 +1,15 @@
 import { Request, Response } from "express";
-import CategoryService from "../services/CategoryService";
-import OrderService from "../services/OrderService";
+import OrderService, { orderService } from "../services/OrderService";
+import ProductService, { productService } from "../services/ProductService";
 
 class OrderController {
 
     async create(request: Request, response: Response) {
         const {numeroDeOrden,cliente, fecha,status, productos } = request.body;
 
-        const createOrderService = new OrderService();
     
         try {
-            await createOrderService.create({
+            await orderService.create({
             numeroDeOrden, cliente, fecha, status, productos
             }).then(() => {
                 request.flash("success_msg", "categoria agregada correctamente")
@@ -24,13 +23,17 @@ class OrderController {
   
     }
 
+    async add (req: Request, res: Response){
+
+        const productos = await productService.list();
+        return res.render("Order/add", {productos})
+    }
+
     async delete(request: Request, response: Response) {
         const { id } = request.body;
   
-        const deleteOrderService = new OrderService();
-  
         try {
-            await deleteOrderService.delete(id).then(() => {
+            await orderService.delete(id).then(() => {
                 request.flash("success_msg","categoria eliminada exitosamente");
                 response.redirect("./order")
             });
@@ -44,33 +47,36 @@ class OrderController {
         let { id } = request.query;
         id = id.toString();
 
-        const getOrderDataService = new OrderService();
 
-        const order = await getOrderDataService.getData(id);
+        const order = await orderService.getData(id);
+
+        const productos = await productService.list()
 
         return response.render("Order/edit", {
-        order: order
+        order: order,
+        product: productos
         });
     }
 
     async list(request: Request, response: Response) {
         const listOrderService = new OrderService();
-
         const orders = await listOrderService.list();
 
+        const productList = new ProductService();
+
+        const productos = await productList.list() 
+
         return response.render("Order/order", {
-        orders: orders
+        orders: orders,
+        product: productos
         });
     }
 
     async search(request: Request, response: Response) {
          let { search } = request.query;
-         search = search.toString();
-  
-        const searchOrderService = new OrderService();
-  
+         search = search.toString();  
         try {
-            const orders = await searchOrderService.search(search);
+            const orders = await orderService.search(search);
             response.render("Order/search", {
                 orders: orders,
                 search: search
@@ -84,10 +90,10 @@ class OrderController {
     async update(request: Request, response: Response) {
         const { id,numeroDeOrden,cliente, fecha,status, productos } = request.body;
     
-        const updateCategoryService = new OrderService();
+
   
         try {
-            await updateCategoryService.update({ id, numeroDeOrden,cliente, fecha,status, productos }).then(() => {
+            await orderService.update({ id, numeroDeOrden,cliente, fecha,status, productos }).then(() => {
                 request.flash("success_msg","categoria actualizada correctamente")
                 response.redirect("./order")
             });

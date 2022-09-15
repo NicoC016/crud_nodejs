@@ -71,7 +71,6 @@ class ProductController {
         const categoryList = new CategoryService();
 
         const category = await categoryList.list()
-        console.log(category)
         return response.render("Product/product", {
             products: products,
             category: category

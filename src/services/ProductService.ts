@@ -35,7 +35,6 @@ class ProductService {
     newProduct.category = category
     
     
-    console.log(newProduct);
 
     await productRepository.save(newProduct);
 

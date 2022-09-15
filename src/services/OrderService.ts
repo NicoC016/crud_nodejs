@@ -1,24 +1,21 @@
 import { getCustomRepository } from "typeorm";
-import { CategoryRepository } from "../repositories/CategoryRepository"
-import { Category } from "../entities/Category";
 import { Product } from "../entities/Product";
-import { User } from "../entities/User";
 import { OrderRepository } from "../repositories/OrderReposytory";
 import { Order } from "../entities/Order";
 
 interface IOrder {
-    id?: string;
+    id: string;
     numeroDeOrden:number;
-    cliente:User; 
+    cliente:string; 
     fecha:Date
     status:string; 
-    productos:Product[] 
+    productos:Product; 
 
 }
 
 class OrderService {
 
-    async create({ numeroDeOrden,cliente, fecha,status, productos }: IOrder) {
+    async create({ numeroDeOrden,cliente, fecha,status, productos }) {
         if ( !numeroDeOrden || !cliente || !fecha || !status || !productos) {
             throw new Error("nombre ya existe")
         }
@@ -31,12 +28,18 @@ class OrderService {
             throw new Error("El pedido ya está registrado");
         }
 
+        const newOrder = new Order();
 
-        const order = orderRepository.create({ numeroDeOrden });
+        newOrder.numeroDeOrden = numeroDeOrden;
+        newOrder.cliente = cliente;
+        newOrder.fecha = fecha;
+        newOrder.status = status;
+        newOrder.productos = productos;
 
-        await orderRepository.save(order);
 
-        return order;
+         orderRepository.save(newOrder);
+
+        return newOrder;
 
     }
 
@@ -66,9 +69,8 @@ class OrderService {
 
     async list() {
         const orderRepository = getCustomRepository(OrderRepository);
-
-        const orders = await orderRepository.find();
-
+        
+        const orders = await orderRepository.find({relations:["productos"]});
         return orders;
     }
 
