@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import UserService from "../services/UserService";
+import {userService} from "../services/UserService";
 
 
 class UserController {
@@ -7,7 +7,7 @@ class UserController {
     async create(request: Request, response: Response) {
         const { name, lastName, username, email, phone, city, state,password } = request.body;
     
-        const createUserService = new UserService();
+        const createUserService = userService;
     
         try {
             await createUserService.create({
@@ -33,7 +33,7 @@ class UserController {
     async delete(request: Request, response: Response) {
         const { id } = request.body;
   
-        const deleteUserService = new UserService();
+        const deleteUserService = userService;
   
         try {
             await deleteUserService.delete(id).then(() => {
@@ -49,7 +49,7 @@ class UserController {
         let { id } = request.query;
         id = id.toString();
 
-        const getUserDataService = new UserService();
+        const getUserDataService = userService;
 
         const user = await getUserDataService.getData(id);
 
@@ -59,7 +59,7 @@ class UserController {
     }
 
     async list(request: Request, response: Response) {
-        const listUsersService = new UserService();
+        const listUsersService = userService;
   
 
         const users = await listUsersService.list();
@@ -73,7 +73,7 @@ class UserController {
          let { search } = request.query;
          search = search.toString();
   
-        const searchUserService = new UserService();
+        const searchUserService = userService;
   
         try {
             const users = await searchUserService.search(search);
@@ -90,7 +90,7 @@ class UserController {
     async update(request: Request, response: Response) {
         const { id,name, lastName,username, email, phone, city, state,password } = request.body;
     
-        const updateUserService = new UserService();
+        const updateUserService = userService;
   
         try {
             await updateUserService.update({ id, name, lastName, username, email, phone, city, state,password }).then(() => {

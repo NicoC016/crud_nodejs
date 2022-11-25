@@ -1,68 +1,75 @@
 <!DOCTYPE html>
 <html lang="es">
 
-    <%- include('../other/header'); -%>
+<%- include('../other/header'); -%>
 
-<body>
-  <%- include('../other/index'); -%>
-  
-  <div class="categoryTools container">
-    <div class="text-center">
-      <h2 class="h2">Crear Pedidos</h2>
-    </div>
-    <br>
-    <form  action="./add-order" method="POST">
-      <div class="tablecentral">
-        <div class="row">
-          <div class="col-6">
-            <label for="numeroDeOrden" class="form-label">Numero de pedido</label>
-            <input type="number" name="numeroDeOrden" id="numeroDeOrden" class="form-control" required>
-          </div>
-          <div class="col-6">
-            <label for="Cliente" class="form-label">Cliente</label>
-            <input type="string" name="Cliente" id="Cliente" class="form-control" required>
-          </div>
-          <div class="col-6">
-            <label for="fecha" class="form-label">fecha</label>
-            <input type="Date" name="fecha" id="fecha" class="form-control" required>
-          </div>
-          <div class="col-6">
-            <label for="status" class="form-label">status</label>
-            <input type="string" name="status" id="status" class="form-control" required>
-          </div>
-          <div class="row">
+  <body>
+    <%- include('../other/index'); -%>
+
+      <div class="categoryTools container">
+        <div class="text-center">
+          <h2 class="h2">Crear Pedidos</h2>
+        </div>
+        <br>
+        <form action="./add-order" method="POST">
+          <div class="tablecentral">
+            <div class="row">
+              <div class="col-6">
+                <label for="numeroDeOrden" class="form-label">Numero de pedido</label>
+                <input type="number" name="numeroDeOrden" id="numeroDeOrden" class="form-control" required>
+              </div>
+              <div class="col-6">
+                 <label for="users" class="form-label">Cliente</label> 
+                <select name="users" id="users" class="form-select" required>
+                  <option value="" selected disabled>Seleccione el cliente</option>
+                  <% user.forEach(function(user){ %>
+                    <option value="<%= user.id %>">
+                      <%= user.name %>
+                    </option>
+                    <%})%>
+                </select>
+              </div>
+              <div class="col-6">
+                <label for="fecha" class="form-label">fecha</label>
+                <input type="datetime-local" name="date" id="fecha"  class="form-control" required>
+              </div>
+              <div class="col-6">
+                <label for="status" class="form-label">status</label>
+                <input type="string" name="status" id="status" class="form-control" required>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 col-md-12">
+                  <label for="exampleFormControlSelect2">Elija uno o varios productos</label>
+                  <select name="productos" id="productos" class="form-select" required>
+                    <option value="" selected disabled>Seleccione productos</option>
+                    <% productos.forEach(function(products){ %>
+                      <option value="<%= products.id %>">
+                        <%= products.productname %>
+                      </option>
+                      <%})%>
+                  </select>
+              </div>
+              </div>
+            </div>
+            <br>
             <div class="col-6">
-            <label for="productos" class="form-label">Productos</label>
-            <select name="productos" id="productos" class="form-select" required>
-              <option value="" selected disabled>Seleccione los productos</option>
-              <% productos.forEach(function(productos){ %>
-                <option value="<%= productos.id %>">
-                  <%= productos.productname %>
-                </option>
-                <%})%>
-            </select>
-          </div>
-        </div>
+              <div class="float-end">
+                <button type="submit" class="btn primary-btn">Agregar Pedido</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="float-start">
+                  <a href="./orders" class="btn primary-btn">Volver a pedidos</a>
+                </div>
+              </div>
+            </div>
+        </form>
       </div>
-      <br>
-      <div class="col-6">
-        <div class="float-end">
-          <button type="submit" class="btn primary-btn">Agregar Pedido</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6">
-          <div class="float-start">
-            <a href="./orders" class="btn primary-btn">Volver a pedidos</a>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-    crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
 
-</body>
+  </body>
 
 </html>

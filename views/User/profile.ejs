@@ -8,18 +8,17 @@
   <%- include('../other/index'); -%>
 
 
-  <div class="users " style="margin-left: 36.5rem; margin-top: 3.8rem; ">
+  <div class="users " style="margin-left: 36.5rem; margin-top: 10rem; ">
     <div class="row">
       <div class="col">
-        <div class="card border-success bg-dark  " style="max-width: 21.8rem; max-height: 34rem;">
-          <% login_user.forEach(function(users) { %>
-            <div class="card-header bg-transparent border-success">
-              <h3>Bienvenido <%=users.username %>
+        <div class="card border-success bg-dark  " style="max-width: 23rem; max-height: 34rem;">
+            <div class="card-header bg-transparent border-success text-white">
+              <h3>Bienvenido <%= user.name %> <%=user.lastName %>
               </h3>
             </div>
             <div class="card-body text-success text-white">
               <h4>
-                <%=users.email %>
+                 Tu Email: <%= user.email %>
               </h4>
             </div>
             <div class="card-footer bg-transparent border-success ">
@@ -28,8 +27,7 @@
                 <button type="submit" class="btn bg-transparent border-success m-4 text-white">Modifica tu
                   perfil</button>
               </form>
-            </div>
-          <% }) %>
+            </div> 
         </div>
       </div>
     </div>

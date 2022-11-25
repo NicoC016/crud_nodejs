@@ -3,14 +3,14 @@ import passport from "passport"
 import { Authoricer } from "../src/other/authoricer";
 
 // Validacion de identidad 
-//  const redirectLogin = (req:Request, res:Response,next: NextFunction) => {  
-//     if(req.session.cookie.path =="/index"){
-//         res.redirect("/")
+ const redirectLogin = (req, res,next) => {  
+    if(req.user){
+        res.redirect("/")
 
-//     }else{
-//         next()
-//     }
-//  }
+    }else{
+        next()
+    }
+ }
 
 
 const routerSign = express.Router();
@@ -49,12 +49,15 @@ routerSign.get('/logout', function (req, res,next) {
     })  
 })
 //perfil
-routerSign.get("/profile",   (request, response,next) =>{
+routerSign.get("/profile", Authoricer.isLoggedIn, (request, response,next) =>{
     response.render("User/profile")
     next()
 });
   
-routerSign.get("/index",  (request, response) => {
-    response.render('/');
+routerSign.get("/index", Authoricer.isLoggedIn, (request, response, next) => {
+    response.render('/index');
+    next()
 });
+
+
 export {routerSign};

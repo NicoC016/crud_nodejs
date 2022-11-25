@@ -1,5 +1,6 @@
 import { request, response, Router } from "express";
 import CategoryController from "../src/controllers/CategoryController";
+import { Authoricer } from "../src/other/authoricer";
 
 const routerCategory = Router();
 
@@ -9,17 +10,17 @@ routerCategory.get("/addCategory", (request, response) => {
     response.render("Category/add");
   });
   
-routerCategory.get("/category", categoryController.list);
+routerCategory.get("/category", Authoricer.isLoggedIn,categoryController.list);
 
-routerCategory.post("/add-category", categoryController.create);
+routerCategory.post("/add-category",Authoricer.isLoggedIn, categoryController.create);
 
-routerCategory.get("/searchCategory", categoryController.search);
+routerCategory.get("/searchCategory",Authoricer.isLoggedIn, categoryController.search);
 
-routerCategory.get("/editCategory", categoryController.get);
+routerCategory.get("/editCategory", Authoricer.isLoggedIn,categoryController.get);
 
-routerCategory.post("/edit-category", categoryController.update);
+routerCategory.post("/edit-category",Authoricer.isLoggedIn,  categoryController.update);
 
-routerCategory.post("/delete-category", categoryController.delete);
+routerCategory.post("/delete-category",Authoricer.isLoggedIn, categoryController.delete);
 
 export { routerCategory };
   

@@ -1,3 +1,6 @@
+
+
+
 /*sidebars*/
 .sidenav {
   height: 100%;
@@ -48,10 +51,12 @@
 }
 /*body*/
 body {
+  background-color:var(--color-fondo);
+  color:var(--color-fuente);
   font-family: 'Open Sans', sans-serif;
   max-width: 100vw!important;
   max-height: 100vh!important;
-  background-image: url(https://images6.alphacoders.com/115/thumb-1920-1155266.png);
+  background-image: url(../img/fondo.png);
   background-size:100rem ;
   background-position: bottom;
   background-position-y: 59rem;
@@ -93,11 +98,9 @@ body {
 
 /*categorias*/
 .categoryTools{
-  margin-top:5rem;
-}
-.categoryTools2{
   margin-top:9rem;
 }
+
 /*productos*/
 .productTools{
   margin-top:7rem;
@@ -230,5 +233,8 @@ input:invalid {
 input:valid {
   border: 2px solid green;
 }
+
+
+
 
 

@@ -2,10 +2,10 @@ import {Request, Response} from "express"
 
 export class Authoricer{
     static isLoggedIn (request:Request, response:Response, next) {
-        if (!request.isAuthenticated()) {
+        if (request.isAuthenticated()) {
             return next();
         }
-        return response.redirect('/profile');
+        return response.redirect('/');
     }
     static isNotLoggedIn (req:Request, res:Response, next): any{
         if (!req.isAuthenticated()) {

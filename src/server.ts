@@ -2,16 +2,20 @@ import "reflect-metadata";
 import "express-async-errors";
 import express, { Request, Response, NextFunction } from "express";
 import path from "path";
+//routers
+import { routerOrder } from "../routes/router-order";
 import { router } from "../routes/routes-user";
 import { routerSign } from "../routes/router-sign";
 import { routerProduct } from "../routes/routes-product";
 import { routerCategory } from "../routes/routes-category";
+
+
+
 import session from "express-session";
 import passport from "passport";
 import "./database";
 import morgan from "morgan";
 import flash from 'connect-flash'
-import { routerOrder } from "../routes/router-order";
 //inicializacion
 const app = express();
 
@@ -48,6 +52,7 @@ app.use((request:Request, response, next) => {
 
   app.locals.success_msg = request.flash("success_msg")
   app.locals.error_msg = request.flash("error_msg")
+  app.locals.user = request.user
   next()
 
 });

@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { productService } from "../services/ProductService";
-import ProductService from "../services/ProductService";
-import CategoryService ,{ categoryService } from "../services/CategoryService";
+import { categoryService } from "../services/CategoryService";
 
 
 
@@ -31,7 +30,7 @@ class ProductController {
   
     }
     
-    async add(request: Request,response: Response){
+    async add(request:Request, response: Response){
         const category = await categoryService.list();
     
         return response.render("Product/add",{category})
@@ -57,7 +56,7 @@ class ProductController {
     
         const product = await productService.getData(id);
     
-        const listarcategoria = new CategoryService();
+        const listarcategoria = categoryService
       
         const category = await listarcategoria.list()
         return response.render("Product/edit", {
@@ -68,7 +67,7 @@ class ProductController {
 
     async list(request: Request, response: Response) {
         const products = await productService.list();
-        const categoryList = new CategoryService();
+        const categoryList = categoryService
 
         const category = await categoryList.list()
         return response.render("Product/product", {
@@ -98,10 +97,10 @@ class ProductController {
     async update(request: Request, response: Response) {
         const { id, productname, price, type, category } = request.body;
 
-        const productService = new ProductService();
+        const productServices = productService
   
         try {
-            await productService.update({ id, productname, price, type, category }).then(() => {
+            await productServices.update({ id, productname, price, type, category }).then(() => {
                 request.flash("success_msg","producto actualizado exitosamente");
                 response.redirect("./products")
             });

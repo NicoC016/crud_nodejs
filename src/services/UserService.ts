@@ -120,5 +120,5 @@ class UserService {
     
 };
 
-export default UserService;
+export  const userService = new UserService();
   

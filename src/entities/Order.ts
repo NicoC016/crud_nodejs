@@ -15,8 +15,9 @@ class Order {
   @Column()
   numeroDeOrden: number;
 
-  @Column()
-  cliente:string
+  @ManyToOne(() => User, user => user.order)
+  @JoinColumn({ name: 'cliente'})
+  cliente:User
 
   @Column()
   fecha: Date;
@@ -28,7 +29,7 @@ class Order {
     cascade: true
   })
   @JoinTable()
-  productos: Product  
+  productos: Product[]  
 
   @CreateDateColumn()
   created_at: Date;

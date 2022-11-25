@@ -1,5 +1,6 @@
 import { Router } from "express";
 import OrderController from "../src/controllers/OrderController";
+import { Authoricer } from "../src/other/authoricer";
 
 
 
@@ -8,20 +9,12 @@ const routerOrder = Router();
 const orderController = new OrderController();
 
 
-routerOrder.get("/addOrder", (request, response) => {
-  response.render("Order/add");
-});
-
-routerOrder.get("/orders", orderController.list);
-
-routerOrder.post("/add-order", orderController.create);
-
-routerOrder.get("/search", orderController.search);
-
-routerOrder.get("/editOrder", orderController.get);
-
-routerOrder.post("/edit-order", orderController.update);
-
-routerOrder.post("/delete-order", orderController.delete);
+routerOrder.get("/orders", Authoricer.isLoggedIn, orderController.list);
+routerOrder.get("/addOrder", Authoricer.isLoggedIn,  orderController.add);
+routerOrder.post("/add-order", Authoricer.isLoggedIn, orderController.create);
+routerOrder.get("/searchOrder", Authoricer.isLoggedIn, orderController.search);
+routerOrder.get("/editOrder", Authoricer.isLoggedIn, orderController.get);
+routerOrder.post("/edit-order", Authoricer.isLoggedIn, orderController.update);
+routerOrder.post("/delete-order", Authoricer.isLoggedIn, orderController.delete);
 
 export { routerOrder };

@@ -1,7 +1,7 @@
 import passport from "passport"
 import * as passportLocal from 'passport-local';
 const LocalStrategy = passportLocal.Strategy;
-import UserService from "../services/UserService"
+import {userService} from "../services/UserService"
 import {helpers} from"./helpers"
 import {User} from "../entities/User"
 
@@ -17,8 +17,8 @@ passport.use('local.signin', new LocalStrategy({
 
 }, async (request, email, password, done) => {
   
-  const userService = new UserService()
-  const busqueda : User[]  = await userService.getDatabyEmail(email)
+  const userServices = userService
+  const busqueda : User[]  = await userServices.getDatabyEmail(email)
   if (busqueda.length == 1) {
     const user:User = busqueda[0];
     const validPassword = await helpers.matchPassword(password, user.password)
@@ -57,9 +57,9 @@ passport.use('local.signup', new LocalStrategy({
  newUser.password = await helpers.encryptPassword(password);
 
 
- const userService = new UserService()
+ const userServices = userService
  try {
-     await userService.create(newUser).then((result) => {
+     await userServices.create(newUser).then((result) => {
        request.flash('message', 'Usuario creado con éxito');
          return done(null, result);
      });
@@ -77,7 +77,7 @@ passport.serializeUser((user: User, done) => {
 });
 
 passport.deserializeUser(async (id: string, done) => {
- const userService = new UserService()
- const result = await userService.getData(id)
+ const userServices = userService
+ const result = await userServices.getData(id)
  done(null, result);
 })

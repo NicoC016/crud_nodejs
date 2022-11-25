@@ -1,15 +1,19 @@
 import { getCustomRepository } from "typeorm";
-import { Product } from "../entities/Product";
+//repositorios
 import { OrderRepository } from "../repositories/OrderReposytory";
-import { Order } from "../entities/Order";
 
-interface IOrder {
-    id: string;
+//entidades
+import { Product } from "../entities/Product";
+import { Order } from "../entities/Order";
+import { User } from "../entities/User";
+
+export interface IOrder {
+    id?: string;
     numeroDeOrden:number;
-    cliente:string; 
+    cliente:User; 
     fecha:Date
     status:string; 
-    productos:Product; 
+    productos:Product[]; 
 
 }
 
@@ -61,7 +65,7 @@ class OrderService {
     async getData(id: string) {
         const orderRepository = getCustomRepository(OrderRepository);
 
-        const order = await orderRepository.findOne(id);
+        const order = await orderRepository.findOne(id,{relations:["productos", "cliente"]});
 
         return order;
     }
@@ -70,7 +74,7 @@ class OrderService {
     async list() {
         const orderRepository = getCustomRepository(OrderRepository);
         
-        const orders = await orderRepository.find({relations:["productos"]});
+        const orders = await orderRepository.find({relations:["productos","cliente"]});
         return orders;
     }
 
@@ -95,6 +99,7 @@ class OrderService {
     async update({ id,numeroDeOrden,cliente, fecha, status, productos }: IOrder) {
         const orderRepository = getCustomRepository(OrderRepository);
 
+
         const order = await orderRepository
             .createQueryBuilder()
             .update(Order)
@@ -102,10 +107,12 @@ class OrderService {
             .where("id = :id", { id })
             .execute();
 
+            const orders = await this.getData(id);
+            orders.productos = productos
+            await orderRepository.save(orders)
         return order;
     }
 
 };
 
 export const orderService = new OrderService()
-export default OrderService;
