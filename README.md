@@ -1,6 +1,6 @@
 - Conil, Nicolas
 # CRUD Node.js
-CRUD made with Node.js, Express, TypeScript, TypeORM, EJS &amp; SQLite.
+CRUD made with Node.js, Express, TypeScript, TypeORM, EJS &amp; SQL.
 
 ![Home page image](https://github.com/sinvalbsneto/crud_nodejs/blob/main/public/img/home.png)
 
