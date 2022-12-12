@@ -60,7 +60,7 @@ class ProductService {
     async getData(id: string) {
         const productRepository = getCustomRepository(ProductRepository);
     
-        const product = await productRepository.findOne(id);
+        const product = await productRepository.findOne(id,{relations:["category"]});
     
         return product;
     }

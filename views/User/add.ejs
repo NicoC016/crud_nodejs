@@ -6,7 +6,7 @@
 <body>
   <%- include('../other/index'); -%>
 
-    <div class="UserTools container">
+    <div class="genericTools container">
       <div id="add" class="text-center">
         <h2 class="h2">Crear Usuario</h2>
       </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="col-6">
               <label for="lastName" class="form-label">Apellido </label>
-              <input type="text" name="lastname" id="lastname" class="form-control" required>
+              <input type="text" name="lastName" id="lastName" class="form-control" required>
             </div>
           </div>
           <br>
@@ -86,12 +86,12 @@
         <div class="row">
           <div class="col-6">
             <div class="float-start">
-              <a href="./users" class="btn primary-btn">Volver a Usuarios</a>
+              <button type="submit" class="btn primary-btn">Agregar Usuario</button>
             </div>
           </div>
           <div class="col-6">
             <div class="float-end">
-              <button type="submit" class="btn primary-btn">Agregar Usuario</button>
+              <a href="./users" class="btn primary-btn">Volver a Usuarios</a>
             </div>
           </div>
         </div>

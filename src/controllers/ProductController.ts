@@ -8,8 +8,7 @@ import { categoryService } from "../services/CategoryService";
 class ProductController {
 
     async create(request: Request, response: Response) {
-        const { productname, price, type, category } = request.body;
-        console.log(request.body);
+        const { productname, price, type, category } = request.body
 
         try {
             await productService.create({  
@@ -32,7 +31,7 @@ class ProductController {
     
     async add(request:Request, response: Response){
         const category = await categoryService.list();
-    
+
         return response.render("Product/add",{category})
       }
 
@@ -55,10 +54,8 @@ class ProductController {
         id = id.toString();
     
         const product = await productService.getData(id);
-    
-        const listarcategoria = categoryService
-      
-        const category = await listarcategoria.list()
+        const category = await categoryService.list()
+        
         return response.render("Product/edit", {
           product: product,
           category: category
@@ -67,9 +64,8 @@ class ProductController {
 
     async list(request: Request, response: Response) {
         const products = await productService.list();
-        const categoryList = categoryService
-
-        const category = await categoryList.list()
+        const category = await categoryService.list()
+        
         return response.render("Product/product", {
             products: products,
             category: category

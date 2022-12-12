@@ -1,14 +1,27 @@
 import { Request, Response } from "express";
-import {  orderService } from "../services/OrderService";
+import { Product } from "../entities/Product";
+import { orderService } from "../services/OrderService";
 import { productService } from "../services/ProductService";
 import { userService } from "../services/UserService";
 
 class OrderController {
 
     async create(request: Request, response: Response) {
-        const { numeroDeOrden, cliente, fecha, status, productos } = request.body;
-
+        const { numeroDeOrden, cliente, fecha, status} = request.body;
+        let{productos} = request.body
         try {
+            if(typeof productos === "string"  ){
+                const producto = await productService.getData(productos)
+                productos = []
+                productos.push(producto)
+            }else{
+                productos.map(async (product:string) => {
+                    const producto = await productService.getData(product.toString())
+                    productos.shift()
+                    productos.push(producto)
+                })
+            }
+            
             await orderService.create({
                 numeroDeOrden, cliente, fecha, status, productos
             }).then(() => {
@@ -17,10 +30,9 @@ class OrderController {
             });
         } catch (err) {
             request.flash("error_msg", "fallo al crear la orden")
-            response.redirect("./addOrder")
+            response.redirect("./orders")
 
         }
-
     }
 
     async delete(request: Request, response: Response) {
@@ -39,8 +51,8 @@ class OrderController {
 
     async add(req: Request, res: Response) {
         const productos = await productService.list();
-        const user = await userService.list()
-        return res.render("Order/add", { productos, user })
+        const users = await userService.list()
+        return res.render("Order/add", { productos, users })
     }
 
     async get(request: Request, response: Response) {
@@ -49,15 +61,14 @@ class OrderController {
 
         const order = await orderService.getData(id);
         const productos = await productService.list()
-        const user = await userService.list();
-
-        const productosOrder = order.productos.map(element => element.id)
-
+        const users = await userService.list();
+        const productosOrder = order.productos.map(product=>product.id)
+        
 
         return response.render("Order/edit", {
             order: order,
             productos: productos,
-            user: user,
+            users: users,
             productosOrder
         });
     }
@@ -66,12 +77,13 @@ class OrderController {
 
         const orders = await orderService.list();
         const productos = await productService.list()
-        const user = await userService.list()
+        const users = await userService.list()
 
+        console.log(productos,orders)
         return response.render("Order/order", {
             orders: orders,
             productos: productos,
-            user: user
+            users: users
         });
     }
 
@@ -92,16 +104,29 @@ class OrderController {
     }
 
     async update(request: Request, response: Response) {
-        const { id, numeroDeOrden, cliente, fecha, status, productos } = request.body;
-
+        const { id, numeroDeOrden, cliente, fecha, status } = request.body;
+        let{productos} = request.body
         try {
+            if(typeof productos === "string"  ){
+                const producto = await productService.getData(productos)
+                productos = []
+                productos.push(producto)
+            }else{
+                productos.map(async (product:string) => {
+                    const producto = await productService.getData(product)
+                    productos.shift()
+                    productos.push(producto)
+                })
+            }
+
             await orderService.update({ id, numeroDeOrden, cliente, fecha, status, productos }).then(() => {
                 request.flash("success_msg", "orden actualizada correctamente")
                 response.redirect("./orders")
             });
+            
         } catch (err) {
             request.flash("error_msg", "fallo al actualizar la orden");
-            response.redirect("./editOrder")
+            response.redirect("./orders")
         }
     }
 

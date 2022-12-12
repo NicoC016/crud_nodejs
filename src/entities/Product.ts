@@ -5,7 +5,7 @@ import { Category } from "./Category";
 @Entity("products")
 class Product {
 
-  @PrimaryColumn({primary:true})
+  @PrimaryColumn()
   id:string;
 
   @Column()

@@ -25,6 +25,7 @@ class User {
 
   @Column()
   phone: string;
+  
   @OneToMany(() => Order, order=> order.cliente)
   order:Order[]
 

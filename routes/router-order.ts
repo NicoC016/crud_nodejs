@@ -11,7 +11,7 @@ const orderController = new OrderController();
 
 routerOrder.get("/orders", Authoricer.isLoggedIn, orderController.list);
 routerOrder.get("/addOrder", Authoricer.isLoggedIn,  orderController.add);
-routerOrder.post("/add-order", Authoricer.isLoggedIn, orderController.create);
+routerOrder.post("/add-order", orderController.create);
 routerOrder.get("/searchOrder", Authoricer.isLoggedIn, orderController.search);
 routerOrder.get("/editOrder", Authoricer.isLoggedIn, orderController.get);
 routerOrder.post("/edit-order", Authoricer.isLoggedIn, orderController.update);

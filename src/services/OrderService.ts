@@ -3,27 +3,24 @@ import { getCustomRepository } from "typeorm";
 import { OrderRepository } from "../repositories/OrderReposytory";
 
 //entidades
-import { Product } from "../entities/Product";
 import { Order } from "../entities/Order";
-import { User } from "../entities/User";
+import { Product } from "../entities/Product";
 
 export interface IOrder {
-    id?: string;
+    id: string;
     numeroDeOrden:number;
-    cliente:User; 
-    fecha:Date
+    cliente:string; 
+    fecha:Date; 
     status:string; 
     productos:Product[]; 
 
 }
 
 class OrderService {
-
-    async create({ numeroDeOrden,cliente, fecha,status, productos }) {
+    async create({ numeroDeOrden ,cliente, fecha,status, productos }) {
         if ( !numeroDeOrden || !cliente || !fecha || !status || !productos) {
-            throw new Error("nombre ya existe")
+            throw new Error("Completar todos los datos")
         }
-
         const orderRepository = getCustomRepository(OrderRepository);
 
         const orderAlreadyExists = await orderRepository.findOne({ numeroDeOrden });
@@ -32,17 +29,17 @@ class OrderService {
             throw new Error("El pedido ya está registrado");
         }
 
+
         const newOrder = new Order();
 
         newOrder.numeroDeOrden = numeroDeOrden;
         newOrder.cliente = cliente;
         newOrder.fecha = fecha;
         newOrder.status = status;
-        newOrder.productos = productos;
+        newOrder.productos=productos;
 
-
-         orderRepository.save(newOrder);
-
+        orderRepository.save(newOrder);
+        
         return newOrder;
 
     }
@@ -63,6 +60,7 @@ class OrderService {
 
 
     async getData(id: string) {
+        
         const orderRepository = getCustomRepository(OrderRepository);
 
         const order = await orderRepository.findOne(id,{relations:["productos", "cliente"]});
@@ -99,11 +97,10 @@ class OrderService {
     async update({ id,numeroDeOrden,cliente, fecha, status, productos }: IOrder) {
         const orderRepository = getCustomRepository(OrderRepository);
 
-
         const order = await orderRepository
             .createQueryBuilder()
             .update(Order)
-            .set({ numeroDeOrden, cliente, fecha, status, productos })
+            .set({ numeroDeOrden, cliente, fecha, status })
             .where("id = :id", { id })
             .execute();
 

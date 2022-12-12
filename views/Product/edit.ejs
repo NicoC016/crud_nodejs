@@ -6,7 +6,7 @@
   <%- include('../other/index'); -%>
 
   <br>
-  <div class="productTools container">
+  <div class="genericTools container">
     <div class="text-center">
       <h2 class="h2">Editar producto</h2>
     </div>
@@ -16,7 +16,7 @@
       <div class="row">
         <div class="col-12">
           <label for="name" class="form-label">Nombre del producto</label>
-          <input type="text" name="name" id="name" class="form-control" value="<%= product.name %>" required>
+          <input type="text" name="name" id="name" class="form-control" value="<%= product.productname %>" required>
         </div>
       </div>
       <br>
@@ -32,26 +32,42 @@
       </div>
       <div class="col-6">
         <label for="categoryId" class="form-label">Categoria</label>
-        <select name="categoryId" id="categoryId" class="form-select"required>
-          <option value="" selected disabled>Seleccione Categoria</option>
-          <% category.forEach(function(category){ %>
-            <option value="<%= category.id %>">
-              <%= category.name %>
-            </option>
-            <%})%>
-        </select>
+          <select class="form-control" name="categoryId" id="categoryId" required>
+            <% if( product.category ){ %>
+              <option value="<%= product.category.id %>" selected>
+                  <%= product.category.name %>
+              </option>
+          <% } else{ %>  
+              <option value="" selected disabled>Seleccione una categoría</option>
+          <% } %>
+          
+          <% category.forEach(function(category) { %>
+              <% if( product.category ){ %>
+                  <% if( product.category.id !== category.id ){ %>
+                      <option value="<%= category.id %>">
+                          <%= category.name %>
+                      </option>>
+                  <% } %> 
+              <% } else{ %>  
+                  <option value="<%= category.id %>">
+                      <%= category.name %>
+                  </option>>
+              <% } %>
+                                  
+          <% }) %>
+          </select>
         <br>
       </div>
       <br>
       <div class="row">
         <div class="col-6">
           <div class="float-start">
-            <a href="./products" class="btn primary-btn">Volver a productos</a>
+            <button type="submit" class="btn primary-btn">Editar productos</button>
           </div>
         </div>
         <div class="col-6">
           <div class="float-end">
-            <button type="submit" class="btn primary-btn">Editar productos</button>
+            <a href="./products" class="btn primary-btn">Volver a productos</a>
           </div>
         </div>
       </div>

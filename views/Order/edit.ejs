@@ -1,66 +1,144 @@
 <!DOCTYPE html>
 <html lang="es">
 
-  <%- include('../other/header'); -%>
-<body>
-  <%- include('../other/index'); -%>
+<%- include('../other/header'); -%>
 
-  <br>
-  <div class="productTools container">
-    <div class="text-center">
-      <h2 class="h2">Editar pedido</h2>
-    </div>
-    <br>
-    <form class="text-white" action="./edit-order" method="POST">
-      <input type="hidden" name="id" value="<%= order.id %>" required>  
-      <div class="row">
-        <div class="col-12">
-          <label for="numeroDeOrden" class="form-label">Numero de pedido</label>
-          <input type="number" name="numeroDeOrden" id="numeroDeOrden" class="form-control" value="<%= order.numeroDeOrden %>" required>
-        </div>
-      </div>
+  <body>
+    <%- include('../other/index'); -%>
+
       <br>
-      <div class="row"> 
-        <div class="col-6">
-          <label for="cliente" class="form-label">Cliente</label>
-          <input type="text" name="cliente" id="cliente" class="form-control" value="<%= order.cliente %>"required>
+      <div class="genericTools container">
+        <div class="text-center">
+          <h2 class="h2">Editar pedido</h2>
         </div>
-        <div class="col-6">
-          <label for="fecha" class="form-label">Fecha</label>
-          <input type="date" name="fecha" id="fecha" class="form-control" value="<%= order.fecha %>"required>
-        </div> 
-      </div>
-      <div class="col-6">
-        <label for="productos" class="form-label">Productos</label>
-        <select name="productos" id="productos" class="form-select"required>
-          <option value="" selected disabled>Seleccione los productos</option>
-          <% productos.forEach(function(producto){ %>
-            <option value="<%= producto.id %>">
-              <%= producto.name %>
-            </option>
-            <%})%>
-        </select>
         <br>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-6">
-          <div class="float-start">
-            <a href="./orders" class="btn primary-btn">Volver los pedidos</a>
+        <form class="text-white" action="./edit-order" method="POST">
+          <input type="hidden" name="id" value="<%= order.id %>" required>
+          <div class="row">
+            <div class="col-12">
+              <label for="numeroDeOrden" class="form-label">Numero de pedido</label>
+              <input type="number" name="numeroDeOrden" id="numeroDeOrden" class="form-control"
+                value="<%= order.numeroDeOrden %>" required>
+            </div>
           </div>
-        </div>
-        <div class="col-6">
-          <div class="float-end">
-            <button type="submit" class="btn primary-btn">Editar pedido</button>
+          <br>
+          <div class="row">
+            <div class="col-lg-6 col-md-12">
+              <label for="cliente" class="form-label">Cliente</label>
+              <select name="cliente" id="cliente" class="form-select">
+                <% if( order.cliente ){ %>
+                    <option value="<%= order.cliente.id %>" selected>
+                        <%= order.cliente.name %>
+                    </option>
+                <% } else{ %>  
+                    <option value="" selected disabled>Seleccione usuario</option>
+                <% } %>
+                
+                <% users.forEach(function(user) { %>
+                    <% if( order.cliente ){ %>
+                        <% if( order.cliente.id !== user.id ){ %>
+                            <option value="<%= user.id %>">
+                                <%= user.name %>
+                            </option>>
+                        <% } %> 
+                    <% } else{ %>  
+                        <option value="<%= user.id %>">
+                            <%= user.name %>
+                        </option>>
+                    <% } %>
+                                        
+                <% }) %>
+
+            </select>
+            </div>
+            <div class="col-lg-6 col-md-12">
+              <label for="fecha" class="form-label">Fecha</label>
+              <% 
+              let date = order.fecha.toISOString().split('T')[0]
+              %> 
+              <input type="date" name="fecha" id="fecha" class="form-control" value="<%= date %>" >
           </div>
-        </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <label for="Estado" class="form-label">status</label>
+            <input type="text" name="status" id="status" class="form-control" value="<%= order.status %>" required>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <label for="productos">Seleccione uno o varios productos</label>
+            
+              <% if( order.status.toLowerCase()==='ok' ){ %>
+                <select disabled multiple class="form-control" name="productos" id="productos" required size="3">
+                  <% if( order.productos ){ %>
+                    <% order.productos.forEach(function(product) { %>
+                      <option value="<%= product.id %>" selected>
+                        <%= product.productname %>
+                      </option>>
+                    <% }) %>
+                  <% } else{ %>
+                    <option value="" selected disabled>Seleccione productos</option>
+                  <% } %>
+                  
+                  <% productos.forEach(function(product) { %>
+                    <% if( productosOrder ){ %>
+                      <% if( !productosOrder.includes(product.id) ){ %>
+                        <option value="<%= product.id %>">
+                          <%= product.productname %>
+                        </option>
+                      <% } %>
+                    <% } else{ %>
+                      <option value="<%= product.id %>">
+                        <%= product.productname %>
+                      </option>>
+                    <% } %>
+                  <% }) %>
+                </select>
+              <% } else{ %>
+                <select multiple class="form-control" name="productos" id="productos" required size="3">
+                  <% if( order.productos ){ %>
+                    <% order.productos.forEach(function(product) { %>
+                      <option value="<%= product.id %>" selected>
+                        <%= product.productname %>
+                      </option>>
+                    <% }) %>
+                  <% } else{ %>
+                    <option value="" selected disabled>Seleccione productos</option>
+                  <% } %>
+                  
+                  <% productos.forEach(function(product) { %>
+                    <% if( productosOrder ){ %>
+                      <% if( !productosOrder.includes(product.id) ){ %>
+                        <option value="<%= product.id %>">
+                          <%= product.productname %>
+                        </option>
+                      <% } %>
+                    <% } else{ %>
+                      <option value="<%= product.id %>">
+                        <%= product.productname %>
+                      </option>>
+                    <% } %>
+                  <% }) %>
+                </select>
+              <% } %>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-6 col-md-12">
+              <div class="float-start">
+                <button type="submit" class="btn primary-btn">Editar pedido</button>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+              <div class="float-end">
+                <a href="./orders" class="btn primary-btn">Volver los pedidos</a>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-    crossorigin="anonymous"></script>
-  
-</body>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+  </body>
 
 </html>
