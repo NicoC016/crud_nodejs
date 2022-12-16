@@ -19,7 +19,7 @@ class Vehiculo{
     return this._color
   }
 
-  description(){
+  descripcion(){
     return `el vehiculo es de tipo ${this._tipo}, tiene ${this._rueda} ruedas, es de color ${this._color}`
   }
   
@@ -31,7 +31,7 @@ class Monociclo extends Vehiculo{
   constructor() {
     super(1, 'Monociclo', 'Naranja');
   }
-}
+} 
 class Triciclo extends Vehiculo{
   constructor(){
     super(3,'Triciclo','Rojo')
@@ -83,19 +83,19 @@ class factoryVehiculo{
 const crearVehiculo = new factoryVehiculo();
 
 const monociclo = crearVehiculo.createVehicle(1);
-console.log(monociclo.description());
+console.log(monociclo.descripcion());
 
 const moto = crearVehiculo.createVehicle(2);
-console.log(moto.description());
+console.log(moto.descripcion());
 
 const triciclo = crearVehiculo.createVehicle(3);
-console.log(triciclo.description());
+console.log(triciclo.descripcion());
 
 const auto = crearVehiculo.createVehicle(4);
-console.log(auto.description());
+console.log(auto.descripcion());
 
 const trailer = crearVehiculo.createVehicle(6);
-console.log(trailer.description());
+console.log(trailer.descripcion());
 
 
 crearVehiculo.createVehicle(8);
